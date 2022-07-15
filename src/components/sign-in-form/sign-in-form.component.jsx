@@ -29,12 +29,13 @@ const SignInForm = () => {
   };
 
   const handleSubmit = async (event) => {
+    console.log('handlesubmit');
     event.preventDefault();
 
     try {
       const { user } = await signInAuthUserWithEmailAndPassword(email, password);
       setCurrentUser(user);
-
+      console.log(user);
       resetFormFields();
     } catch (error) {
       switch (error.code) {
