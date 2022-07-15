@@ -3,6 +3,7 @@ import { Outlet, Link } from 'react-router-dom';
 
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 import { UserContext } from '../../contexts/user.context';
+import { signOutUser } from '../../utils/firebase/firebase.utils';
 
 import './navigation.styles.scss';
 
@@ -20,7 +21,12 @@ import './navigation.styles.scss';
 
 const Navigation = () => {
   // console.log(benMallah);
-  const { currentUser } = useContext(UserContext);
+  const { setCurrentUser, currentUser } = useContext(UserContext);
+
+  const signOutHandler = async () => {
+    const response = await signOutUser();
+    setCurrentUser(null);
+  };
 
   const token = currentUser?.accessToken;
   if (token) {
@@ -36,9 +42,15 @@ const Navigation = () => {
           <Link className='nav-link' to='/shop'>
             SHOP
           </Link>
-          <Link className='nav-link' to='/auth'>
-            SIGN IN
-          </Link>
+          {currentUser ? (
+            <span className='nav-link' onClick={signOutHandler}>
+              SIGN OUT
+            </span>
+          ) : (
+            <Link className='nav-link' to='/auth'>
+              SIGN IN
+            </Link>
+          )}
           <Link className='nav-link' to='/contact-us'>
             CONTACT
           </Link>

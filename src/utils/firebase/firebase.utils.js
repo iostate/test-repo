@@ -3,6 +3,7 @@ import {
   getAuth,
   signInWithRedirect,
   signInWithPopup,
+  signOut,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -78,4 +79,8 @@ export const createContactFormDocument = async (data) => {
   // Add a new document with a generated id.
   const docRef = await addDoc(collection(db, 'contact'), data);
   console.log('Document written with ID: ', docRef.id);
+};
+
+export const signOutUser = async () => {
+  await signOut(auth);
 };
